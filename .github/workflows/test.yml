@@ -1,13 +1,14 @@
 # Reference on this file: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
-name: Test
+name: Lint and test
 on:
   push:
       branches:
         - master
+        - feature/linting
   pull_request:
 jobs:
   test:
-    name: Test
+    name: Lint and test
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -17,6 +18,8 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn build
+      - name: Lint
+        run: yarn lint
       - name: Test on BrowserStack
         env:
           # This is in plaintext on purpose. It has no privileged access to anything (this is a free account)
